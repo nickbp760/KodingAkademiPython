@@ -1,0 +1,10 @@
+name = input("Masukan Nama ")
+umur = input("Masukan Umur ")
+alamat = input("Masukan Alamat ")
+
+print()
+print("halo", name, "selamat datang di Koding Akademi!")
+print("berikut identitas anda")
+print("nama =", name)
+print("umur =", umur)
+print("alamat =", alamat)
