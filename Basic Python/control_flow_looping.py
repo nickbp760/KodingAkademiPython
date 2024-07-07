@@ -4,7 +4,7 @@ while True:
     print(score)
     if score == end_score:
         break
-    score+=1
+    score += 1
 
 n = int(input("masukan jumlah "))
 for i in range(n):

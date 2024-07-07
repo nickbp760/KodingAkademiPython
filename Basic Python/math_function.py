@@ -1,5 +1,5 @@
 import math
-y= 15
+y = 15
 x = (math.sqrt(5 ** 2) / (y + 1)) + 2 * y ** 2
 print(x)
 

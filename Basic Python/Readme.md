@@ -8,3 +8,4 @@ Ordered Material List
 7. collection_list
 8. matrix_operation
 9. collection_tuples
+10. collection_dict
