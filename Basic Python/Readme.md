@@ -12,3 +12,6 @@ Ordered Material List
 11. dict_functions
 12. project1_1
 13. project1_2
+14. Turtle dodekagon
+15. Turtle house
+16. Turtle randomness
