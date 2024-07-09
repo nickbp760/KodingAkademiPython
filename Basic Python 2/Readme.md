@@ -5,3 +5,4 @@ Ordered Material List
 4. class_obj
 5. inheritance
 6. python_project1
+7. python_project2
