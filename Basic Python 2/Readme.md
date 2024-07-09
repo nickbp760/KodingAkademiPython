@@ -3,3 +3,4 @@ Ordered Material List
 2. return_func
 3. lambda_args_func
 4. class_obj
+5. inheritance
