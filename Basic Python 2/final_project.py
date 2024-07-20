@@ -16,8 +16,10 @@ def create_file():
             with open(filename, 'w') as file:
                 file.write(content)
             messagebox.showinfo("Success", f"File '{filename}' created successfully with content!")
+            output_entry.config(state='normal')
             output_entry.delete("1.0", tk.END)
             output_entry.insert(tk.END, content)
+            output_entry.config(state='disabled')
             input_entry.delete("1.0", tk.END)
             filename_desc.config(state='normal')
             filename_desc.delete(0, tk.END)
@@ -35,8 +37,10 @@ def read_file():
         try:
             with open(filename, 'r') as file:
                 content = file.read()
+            output_entry.config(state='normal')
             output_entry.delete("1.0", tk.END)
             output_entry.insert(tk.END, content)
+            output_entry.config(state='disabled')
             messagebox.showinfo("Success", f"File '{filename}' read successfully!")
             filename_desc.config(state='normal')
             filename_desc.delete(0, tk.END)
@@ -56,7 +60,9 @@ def delete_file():
             messagebox.showinfo("Success", f"File '{filename}' deleted successfully!")
             filename_entry.delete(0, tk.END)
             input_entry.delete("1.0", tk.END)
+            output_entry.config(state='normal')
             output_entry.delete("1.0", tk.END)
+            output_entry.config(state='disabled')
             filename_desc.config(state='normal')
             filename_desc.delete(0, tk.END)
             filename_desc.config(state='readonly')
@@ -75,7 +81,7 @@ def append_text():
     if not current_output:
         messagebox.showwarning("Warning", "Output is empty. Please read or create a file first.")
         return
-    
+
     if filename != current_filename:
         messagebox.showwarning("Warning", "Filename doesn't match the current file. Please read the file first.")
         return
@@ -84,8 +90,9 @@ def append_text():
         try:
             with open(filename, 'a') as file:
                 file.write("\n" + input_text)
-
+            output_entry.config(state='normal')
             output_entry.insert(tk.END, "\n" + input_text)
+            output_entry.config(state='disabled')
             input_entry.delete("1.0", tk.END)
             messagebox.showinfo("Success", "Text appended successfully to file and output!")
         except Exception as e:
@@ -110,7 +117,7 @@ input_entry.place(x=10, y=80)
 
 output_label = tk.Label(root, text="Output Content:")
 output_label.place(x=350, y=60)
-output_entry = tk.Text(root, width=28, height=5)
+output_entry = tk.Text(root, width=28, height=5, state='disabled')
 output_entry.place(x=350, y=80)
 
 filename_desc_label = tk.Label(root, text="Current File:")
