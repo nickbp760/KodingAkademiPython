@@ -19,6 +19,10 @@ def create_file():
             output_entry.delete("1.0", tk.END)
             output_entry.insert(tk.END, content)
             input_entry.delete("1.0", tk.END)
+            filename_desc.config(state='normal')
+            filename_desc.delete(0, tk.END)
+            filename_desc.insert(0, filename)
+            filename_desc.config(state='readonly')
         except Exception as e:
             messagebox.showerror("Error", f"Failed to create file: {str(e)}")
     else:
@@ -34,6 +38,10 @@ def read_file():
             output_entry.delete("1.0", tk.END)
             output_entry.insert(tk.END, content)
             messagebox.showinfo("Success", f"File '{filename}' read successfully!")
+            filename_desc.config(state='normal')
+            filename_desc.delete(0, tk.END)
+            filename_desc.insert(0, filename)
+            filename_desc.config(state='readonly')
         except Exception as e:
             messagebox.showerror("Error", f"Failed to read file: {str(e)}")
     else:
@@ -49,6 +57,9 @@ def delete_file():
             filename_entry.delete(0, tk.END)
             input_entry.delete("1.0", tk.END)
             output_entry.delete("1.0", tk.END)
+            filename_desc.config(state='normal')
+            filename_desc.delete(0, tk.END)
+            filename_desc.config(state='readonly')
         except Exception as e:
             messagebox.showerror("Error", f"Failed to delete file: {str(e)}")
     else:
@@ -57,6 +68,7 @@ def delete_file():
 
 def append_text():
     filename = filename_entry.get()
+    current_filename = filename_desc.get()
     input_text = input_entry.get("1.0", tk.END).strip()
     current_output = output_entry.get("1.0", tk.END).strip()
 
@@ -64,6 +76,10 @@ def append_text():
         messagebox.showwarning("Warning", "Output is empty. Please read or create a file first.")
         return
     
+    if filename != current_filename:
+        messagebox.showwarning("Warning", "Filename doesn't match the current file. Please read the file first.")
+        return
+
     if filename and os.path.exists(filename):
         try:
             with open(filename, 'a') as file:
@@ -80,7 +96,7 @@ def append_text():
 
 root = tk.Tk()
 root.title("File Creator")
-root.geometry("600x220")
+root.geometry("600x250")
 
 filename_label = tk.Label(root, text="Filename:")
 filename_label.place(x=10, y=10)
@@ -97,16 +113,21 @@ output_label.place(x=350, y=60)
 output_entry = tk.Text(root, width=28, height=5)
 output_entry.place(x=350, y=80)
 
+filename_desc_label = tk.Label(root, text="Current File:")
+filename_desc_label.place(x=350, y=10)
+filename_desc = tk.Entry(root, width=40, state='readonly')
+filename_desc.place(x=350, y=30)
+
 append_button = tk.Button(root, text="Append", command=append_text)
 append_button.place(x=275, y=100)
 
 create_button = tk.Button(root, text="Create File", command=create_file)
-create_button.place(x=50, y=180)
+create_button.place(x=50, y=210)
 
 read_button = tk.Button(root, text="Read File", command=read_file)
-read_button.place(x=200, y=180)
+read_button.place(x=200, y=210)
 
 delete_button = tk.Button(root, text="Delete File", command=delete_file)
-delete_button.place(x=125, y=180)
+delete_button.place(x=125, y=210)
 
 root.mainloop()
