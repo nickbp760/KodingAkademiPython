@@ -5,7 +5,7 @@ import os
 
 def create_file():
     filename = filename_entry.get()
-    content = content_entry.get("1.0", tk.END).strip()
+    content = input_entry.get("1.0", tk.END).strip()
     if filename:
         if os.path.exists(filename):
             response = messagebox.askyesnocancel(
@@ -17,7 +17,7 @@ def create_file():
                 file.write(content)
             messagebox.showinfo("Success", f"File '{filename}' created successfully with content!")
             filename_entry.delete(0, tk.END)
-            content_entry.delete("1.0", tk.END)
+            input_entry.delete("1.0", tk.END)
         except Exception as e:
             messagebox.showerror("Error", f"Failed to create file: {str(e)}")
     else:
@@ -46,7 +46,7 @@ def delete_file():
             os.remove(filename)
             messagebox.showinfo("Success", f"File '{filename}' deleted successfully!")
             filename_entry.delete(0, tk.END)
-            content_entry.delete("1.0", tk.END)
+            input_entry.delete("1.0", tk.END)
             output_entry.delete("1.0", tk.END)
         except Exception as e:
             messagebox.showerror("Error", f"Failed to delete file: {str(e)}")
@@ -55,9 +55,9 @@ def delete_file():
 
 
 def append_text():
-    input_text = content_entry.get("1.0", tk.END).strip()
+    input_text = input_entry.get("1.0", tk.END).strip()
     output_entry.insert(tk.END, "\n"+input_text)
-    content_entry.delete("1.0", tk.END)
+    input_entry.delete("1.0", tk.END)
     messagebox.showinfo("Success", "Text appended successfully!")
 
 
@@ -70,10 +70,10 @@ filename_label.place(x=10, y=10)
 filename_entry = tk.Entry(root, width=40)
 filename_entry.place(x=10, y=30)
 
-content_label = tk.Label(root, text="File Content:")
+content_label = tk.Label(root, text="Input Content:")
 content_label.place(x=10, y=60)
-content_entry = tk.Text(root, width=28, height=5)
-content_entry.place(x=10, y=80)
+input_entry = tk.Text(root, width=28, height=5)
+input_entry.place(x=10, y=80)
 
 output_label = tk.Label(root, text="Output Content:")
 output_label.place(x=350, y=60)
