@@ -16,7 +16,8 @@ def create_file():
             with open(filename, 'w') as file:
                 file.write(content)
             messagebox.showinfo("Success", f"File '{filename}' created successfully with content!")
-            filename_entry.delete(0, tk.END)
+            output_entry.delete("1.0", tk.END)
+            output_entry.insert(tk.END, content)
             input_entry.delete("1.0", tk.END)
         except Exception as e:
             messagebox.showerror("Error", f"Failed to create file: {str(e)}")
@@ -55,10 +56,26 @@ def delete_file():
 
 
 def append_text():
+    filename = filename_entry.get()
     input_text = input_entry.get("1.0", tk.END).strip()
-    output_entry.insert(tk.END, "\n"+input_text)
-    input_entry.delete("1.0", tk.END)
-    messagebox.showinfo("Success", "Text appended successfully!")
+    current_output = output_entry.get("1.0", tk.END).strip()
+
+    if not current_output:
+        messagebox.showwarning("Warning", "Output is empty. Please read or create a file first.")
+        return
+    
+    if filename and os.path.exists(filename):
+        try:
+            with open(filename, 'a') as file:
+                file.write("\n" + input_text)
+
+            output_entry.insert(tk.END, "\n" + input_text)
+            input_entry.delete("1.0", tk.END)
+            messagebox.showinfo("Success", "Text appended successfully to file and output!")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to append to file: {str(e)}")
+    else:
+        messagebox.showerror("File not found", "File not found. Please create a file first.")
 
 
 root = tk.Tk()
