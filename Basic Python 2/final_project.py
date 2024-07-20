@@ -101,9 +101,48 @@ def append_text():
         messagebox.showerror("File not found", "File not found. Please create a file first.")
 
 
+def replace_text():
+    current_filename = filename_desc.get()
+    current_output = output_entry.get("1.0", tk.END).strip()
+
+    filename = filename_entry.get()
+    search_text = search_entry.get()
+    replace_text = update_entry.get()
+
+    if not current_output:
+        messagebox.showwarning("Warning", "Output is empty. Please read or create a file first.")
+        return
+
+    if filename != current_filename:
+        messagebox.showwarning("Warning", "Filename doesn't match the current file. Please read the file first.")
+        return
+
+    if not filename or not os.path.exists(filename):
+        messagebox.showwarning("Warning", "File does not exist or no filename entered.")
+        return
+
+    try:
+        with open(filename, 'r') as file:
+            content = file.read()
+
+        new_content = content.replace(search_text, replace_text)
+
+        with open(filename, 'w') as file:
+            file.write(new_content)
+
+        output_entry.config(state='normal')
+        output_entry.delete("1.0", tk.END)
+        output_entry.insert(tk.END, new_content)
+        output_entry.config(state='disabled')
+
+        messagebox.showinfo("Success", f"Text replaced and saved in file '{filename}'!")
+    except Exception as e:
+        messagebox.showerror("Error", f"Failed to replace text: {str(e)}")
+
+
 root = tk.Tk()
 root.title("File Creator")
-root.geometry("600x250")
+root.geometry("600x300")
 
 filename_label = tk.Label(root, text="Filename:")
 filename_label.place(x=10, y=10)
@@ -136,5 +175,18 @@ read_button.place(x=200, y=210)
 
 delete_button = tk.Button(root, text="Delete File", command=delete_file)
 delete_button.place(x=125, y=210)
+
+search_label = tk.Label(root, text="Search:")
+search_label.place(x=10, y=170)
+search_entry = tk.Entry(root, width=20)
+search_entry.place(x=60, y=170)
+
+update_label = tk.Label(root, text="Update:")
+update_label.place(x=200, y=170)
+update_entry = tk.Entry(root, width=20)
+update_entry.place(x=260, y=170)
+
+replace_button = tk.Button(root, text="Replace", command=replace_text)
+replace_button.place(x=420, y=165)
 
 root.mainloop()
