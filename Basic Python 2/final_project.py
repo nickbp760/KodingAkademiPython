@@ -7,6 +7,11 @@ def create_file():
     filename = filename_entry.get()
     content = content_entry.get("1.0", tk.END).strip()
     if filename:
+        if os.path.exists(filename):
+            response = messagebox.askyesnocancel(
+                "File Exist", "Replace file?\n Yes: Replace all content\nNo: Abort operation")
+            if response is not True:
+                return
         try:
             with open(filename, 'w') as file:
                 file.write(content)
