@@ -30,8 +30,8 @@ def read_file():
         try:
             with open(filename, 'r') as file:
                 content = file.read()
-            content_entry.delete("1.0", tk.END)
-            content_entry.insert(tk.END, content)
+            output_entry.delete("1.0", tk.END)
+            output_entry.insert(tk.END, content)
             messagebox.showinfo("Success", f"File '{filename}' read successfully!")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to read file: {str(e)}")
@@ -47,6 +47,7 @@ def delete_file():
             messagebox.showinfo("Success", f"File '{filename}' deleted successfully!")
             filename_entry.delete(0, tk.END)  # Clear the filename entry field
             content_entry.delete("1.0", tk.END)  # Clear the content entry field
+            output_entry.delete("1.0", tk.END)  # Clear the output entry field
         except Exception as e:
             messagebox.showerror("Error", f"Failed to delete file: {str(e)}")
     else:
@@ -56,7 +57,7 @@ def delete_file():
 # Create the main window
 root = tk.Tk()
 root.title("File Creator")
-root.geometry("300x200")
+root.geometry("600x200")
 
 # Create the filename entry field
 filename_label = tk.Label(root, text="Filename:")
@@ -69,6 +70,12 @@ content_label = tk.Label(root, text="File Content:")
 content_label.place(x=10, y=60)
 content_entry = tk.Text(root, width=35, height=5)
 content_entry.place(x=10, y=80)
+
+# Create the output content field
+output_label = tk.Label(root, text="Output Content:")
+output_label.place(x=310, y=60)
+output_entry = tk.Text(root, width=35, height=5)
+output_entry.place(x=310, y=80)
 
 # Create the buttons
 create_button = tk.Button(root, text="Create File", command=create_file)
